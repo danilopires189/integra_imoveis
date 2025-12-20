@@ -21,6 +21,15 @@ Para rodar localmente:
 -   Use a extensão **Live Server** no VS Code.
 -   Ou rode um servidor via terminal (ex: `python -m http.server`).
 
+## 🚩 Corrigindo o Erro de Deploy (Jekyll Error)
+
+Se o GitHub mostrar o erro *"Deploy Jekyll with GitHub Pages dependencies preinstalled workflow run failed"*, siga estes passos:
+
+1.  No seu repositório do GitHub, vá em **Settings** > **Pages**.
+2.  Em **Build and deployment** > **Source**, verifique se está selecionado **"Deploy from a branch"**.
+3.  Certifique-se de que o arquivo `.nojekyll` (que eu criei) foi enviado junto com os outros arquivos. Ele avisa ao GitHub que seu site não precisa do processamento Jekyll.
+4.  Após conferir isso, o GitHub fará um novo deploy automático e o erro deve desaparecer.
+
 ## 📁 Estrutura de Arquivos
 
 -   `app.js`: Lógica principal da aplicação.
@@ -29,6 +38,7 @@ Para rodar localmente:
 -   `BASE_CADASTRO.json`: Banco de dados de produtos.
 -   `BASE_END.json`: Banco de dados de endereços.
 -   `pm.png` / `logo.png`: Logos da aplicação.
+-   `.nojekyll`: Arquivo para evitar erros de deploy no GitHub.
 
 ---
 Desenvolvido por Danilo Pires.
