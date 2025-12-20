@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etiqueta de Mercadoria - Hub de Etiquetas</title>
+    <link rel="stylesheet" href="../shared/design-system.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p id="loading-text">Iniciando sistema...</p>
+    </div>
+
+    <!-- Screen UI -->
+    <div id="screen-ui" class="screen-container">
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-logos">
+                    <img src="../assets/pm.png" alt="Pague Menos" class="brand-logo primary"
+                        onerror="this.style.display='none'">
+                    <img src="../assets/logo.png" alt="Danilo" class="brand-logo secondary"
+                        onerror="this.style.display='none'">
+                </div>
+                <div class="brand-text">
+                    <h1>Pague Menos</h1>
+                    <span class="app-subtitle">Etiquetas • Mercadoria</span>
+                </div>
+            </div>
+            <div class="actions">
+                <button id="btnHub" class="btn btn-ghost" onclick="window.location.href='../index.html'">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9,22 9,12 15,12 15,22" />
+                    </svg>
+                    Hub
+                </button>
+                <button id="historico-btn" type="button" class="btn btn-ghost" title="Ver histórico">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14,2 14,8 20,8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10,9 9,9 8,9" />
+                    </svg>
+                    Histórico
+                </button>
+                <button id="imprimir" type="button" class="btn btn-ghost" title="Ctrl/Cmd+P" onclick="window.print()"
+                    aria-label="Imprimir">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6,9 6,2 18,2 18,9" />
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                        <rect x="6" y="14" width="12" height="8" />
+                    </svg>
+                    Imprimir
+                </button>
+            </div>
+        </header>
+
+        <div class="card search-card">
+            <form id="form-search" class="search-form">
+                <div class="form-group">
+                    <label for="input-barcode">Código de Barras (Bipe aqui)</label>
+                    <div style="position: relative;">
+                        <input type="text" id="input-barcode" class="input-lg" placeholder="Aguardando leitor..."
+                            autocomplete="off" style="padding-left: 45px; max-width: 300px;">
+                        <div class="scanner-icon"
+                            style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); pointer-events: none;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3">
+                                </path>
+                                <line x1="4" y1="12" x2="20" y2="12"></line>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group small-group">
+                    <label for="input-matricula">Matrícula</label>
+                    <input type="text" id="input-matricula" class="input-lg" placeholder="00000" required>
+                </div>
+
+                <div class="form-group small-group">
+                    <label style="font-size: 0.8rem;">Destino</label>
+                    <div style="display: flex; flex-direction: column; gap: 0.2rem; padding-top: 0.2rem;">
+                        <label
+                            style="display: flex; align-items: center; gap: 0.4rem; font-weight: normal; cursor: pointer; font-size: 0.9rem;">
+                            <input type="radio" name="destino" value="pulmao" checked> Pulmão
+                        </label>
+                        <label
+                            style="display: flex; align-items: center; gap: 0.4rem; font-weight: normal; cursor: pointer; font-size: 0.9rem;">
+                            <input type="radio" name="destino" value="separacao"> Separação
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group small-group" style="display: flex; align-items: flex-end; padding-bottom: 5px;">
+                    <label
+                        style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+                        <input type="checkbox" id="check-validade" style="width: 18px; height: 18px;">
+                        Inserir Validade
+                    </label>
+                </div>
+
+                <div style="display: flex; gap: 1rem; align-items: flex-end;">
+                    <div class="form-group" style="width: 80px;">
+                        <label
+                            style="font-size: 0.8rem; display: block; margin-bottom: 0.5rem; text-align: center;">Depósito</label>
+                        <input type="text" class="input-lg" value="2" disabled
+                            style="text-align: center; background-color: #f3f4f6; cursor: not-allowed; width: 100%;">
+                    </div>
+
+
+                </div>
+
+                <button type="submit" id="btn-generate" class="btn-primary">
+                    Gerar Etiqueta
+                </button>
+            </form>
+
+            <!-- Print Adjustments -->
+            <!-- Print Adjustments -->
+            <div class="adjust-box" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                <label
+                    style="display:block; margin-bottom: 0.5rem; color: var(--text-secondary); font-weight:600;">Configuração
+                    da Etiqueta (mm)</label>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <div class="form-group" style="flex:0 0 auto; width: 100px;">
+                        <label for="input-width" style="font-size: 0.8rem;">Largura</label>
+                        <input type="number" id="input-width" class="input-lg" value="90"
+                            style="font-size: 1rem; padding: 0.5rem;">
+                    </div>
+                    <div class="form-group" style="flex:0 0 auto; width: 100px;">
+                        <label for="input-height" style="font-size: 0.8rem;">Altura</label>
+                        <input type="number" id="input-height" class="input-lg" value="49"
+                            style="font-size: 1rem; padding: 0.5rem;">
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div id="status-msg" class="status-msg"></div>
+        </div>
+
+        <!-- Preview Area -->
+        <div id="preview-section" style="margin-top: 2rem;">
+            <h3 style="color: var(--text-secondary); margin-bottom: 1rem;">Visualização</h3>
+            <div id="screen-preview" class="preview-container"
+                style="background: #e5e7eb; padding: 2rem; border-radius: 1rem; display: flex; justify-content: center; align-items: center; min-height: 200px;">
+                <p style="color: #6b7280; font-style: italic;">A etiqueta gerada aparecerá aqui...</p>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>Instruções</h3>
+            <ul>
+                <li>Bipe o código de barras do produto.</li>
+                <li id="instruction-target">O sistema buscará automaticamente o endereço de PULMÃO.</li>
+                <li>Se encontrado, a janela de impressão abrirá automaticamente.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Print Area (Hidden on screen) -->
+    <div id="print-area"></div>
+
+    <!-- Copies Modal -->
+    <div id="copies-modal" class="modal" style="display: none; z-index: 30000;">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Quantidade de Cópias</h3>
+            </div>
+            <div class="modal-body"
+                style="padding: 2rem; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                <p style="text-align: center; color: var(--text-secondary); margin: 0;">Quantas etiquetas deseja
+                    imprimir?</p>
+                <input type="number" id="modal-input-copies" class="input-lg" value="1" min="1" max="100"
+                    style="text-align: center; font-size: 3rem; width: 120px; font-weight: bold; color: var(--brand-primary); padding: 0.5rem;">
+            </div>
+            <div class="modal-footer"
+                style="display: flex; gap: 1rem; justify-content: flex-end; padding: 1.5rem; background: #f9fafb; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+                <button id="cancel-copies" class="btn btn-ghost" style="border: 1px solid #ddd;">Cancelar</button>
+                <button id="confirm-copies" class="btn-primary" style="padding: 0.75rem 2rem;">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Validity Modal -->
+    <div id="validity-modal" class="modal" style="display: none; z-index: 30001;">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Inserir Validade</h3>
+            </div>
+            <div class="modal-body"
+                style="padding: 2rem; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                <p style="text-align: center; color: var(--text-secondary); margin: 0;">Informe a validade (MMAA):</p>
+                <input type="text" id="modal-input-validity" class="input-lg" placeholder="0000" maxlength="4"
+                    style="text-align: center; font-size: 3rem; width: 180px; font-weight: bold; color: var(--brand-primary); padding: 0.5rem;">
+                <p style="font-size: 0.8rem; color: #666;">Ex: 0126 para Janeiro/2026</p>
+            </div>
+            <div class="modal-footer"
+                style="display: flex; gap: 1rem; justify-content: flex-end; padding: 1.5rem; background: #f9fafb; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+                <button id="cancel-validity" class="btn btn-ghost" style="border: 1px solid #ddd;">Cancelar</button>
+                <button id="confirm-validity" class="btn-primary" style="padding: 0.75rem 2rem;">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div id="historico-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Histórico de Etiquetas</h3>
+                <div class="header-actions">
+                    <button id="toggle-search" class="btn-icon" title="Buscar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                        </svg>
+                    </button>
+                    <button class="modal-close" id="historico-close">×</button>
+                </div>
+            </div>
+
+            <div id="search-section" class="modal-search" style="display: none;">
+                <div class="search-container">
+                    <div class="search-input-group">
+                        <input type="text" id="search-input" placeholder="Buscar..." class="search-input" />
+                        <button id="clear-search" class="clear-search" title="Limpar">×</button>
+                    </div>
+                    <div class="search-filters">
+                        <label class="filter-option"><input type="radio" name="searchType" value="all" checked>
+                            <span>Todos</span></label>
+                        <label class="filter-option"><input type="radio" name="searchType" value="matricula">
+                            <span>Matrícula</span></label>
+                        <label class="filter-option"><input type="radio" name="searchType" value="data">
+                            <span>Data</span></label>
+                        <label class="filter-option"><input type="radio" name="searchType" value="coddv">
+                            <span>CODDV</span></label>
+                        <label class="filter-option"><input type="radio" name="searchType" value="descricao">
+                            <span>Descrição</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <div id="historico-list" class="historico-list"></div>
+            </div>
+
+            <div class="modal-footer">
+                <small>Histórico local (últimos 60 dias)</small>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="app-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p class="footer-title">Sistema de Etiquetas Pague Menos</p>
+                    <p class="footer-subtitle">Desenvolvido por Danilo Pires</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://wa.me/5562981020272" target="_blank" rel="noopener" class="footer-link">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                        </svg>
+                        Suporte
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+    <script src="../shared/barcode.js"></script>
+    <!-- Contador Global -->
+    <script src="../js/contador-global-centralizado.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
