@@ -55,8 +55,6 @@ async function init() {
         ui.loading.style.display = 'flex';
         ui.loadingText.textContent = 'Carregando banco de produtos...';
 
-        // Load CADASTRO
-        // Using explicit relative path to avoid 404s on some hostings
         // Load CADASTRO (Fetch JSON directly)
         const resCad = await fetch('BASE_CADASTRO.json');
         if (!resCad.ok) throw new Error(`Falha ao carregar BASE_CADASTRO.json: ${resCad.status}`);
@@ -65,10 +63,7 @@ async function init() {
         ui.loadingText.textContent = 'Indexando produtos...';
         if (jsonCad.BASE_CADASTRO) {
             for (const item of jsonCad.BASE_CADASTRO) {
-                // Ensure we handle leading zeros or strict matching? 
-                // Using exact string match for now.
                 Data.products.set(item.BARRAS, item);
-                // Also map by CODDV just in case? No, flow is scan Barcode.
             }
         }
 
@@ -81,7 +76,6 @@ async function init() {
         ui.loadingText.textContent = 'Indexando endereços...';
         if (jsonEnd.BASE_END) {
             for (const item of jsonEnd.BASE_END) {
-                // Only care about PULMÃO type as per requirement
                 if (item.CODDV) {
                     if (!Data.addresses.has(item.CODDV)) {
                         Data.addresses.set(item.CODDV, []);
